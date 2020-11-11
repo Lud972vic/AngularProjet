@@ -1,0 +1,35 @@
+<div class="container">
+  <h2 *ngIf="medias && medias.length > 0" class="my-5">{{ title }}</h2>
+
+  <button class="btn btn-info mb-3 d-flex" (click)="toggleIsNewBadge()">
+    <span class="material-icons ml-2">
+      {{ showBadge ? 'visibility_off' : 'visibility'}}
+    </span>
+    {{ showBadge ? 'Masquer' : 'Voir'}} les nouveautés
+  </button>
+
+  <div class="my-2">
+    <div class="row">
+      <div class="col-md-6">
+        <p class="d-flex"><span class="material-icons">search</span>Filtre actuel : <b class="text-info">{{ mediaFilter }}</b></p>
+      </div>
+      <div class="col-md-6 form-group">
+        <input type="text" class="form-control text-info" [(ngModel)]="mediaFilter">
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row row-cols-1 row-cols-md-3">
+    <div class="col mb-4" *ngFor="let media of medias">
+      <div class="card">
+        <img [src]="media.imageUrl" [title]="media.mediaName" class="card-img-top" [alt]="[media.mediaName]">
+        <div class="card-body">
+          <h5 class="card-title">{{ media.mediaName | uppercase }}</h5>
+          <p class="card-text">{{ media.description }}</p>
+          <p class="card-text">{{ media.price | currency : 'EUR' : 'symbol' : '1.2-2' : 'fr' }}</p>
+          <span class="badge badge-pill badge-info" *ngIf="showBadge">Nouveauté</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
