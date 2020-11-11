@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { FooterComponent } from './footer/footer.component';
 import { registerLocaleData} from '@angular/common';
 import localeFr from '@angular/common/locales/fr' 
+import { ReplaceComma } from 'src/shared/pipes/replace-comma.pipe';
 
 registerLocaleData(localeFr, 'fr');
 
@@ -17,7 +18,8 @@ registerLocaleData(localeFr, 'fr');
     AppComponent,
     MurDePhotographiesComponent,
     NavBarComponent,
-    FooterComponent
+    FooterComponent,
+    ReplaceComma,
   ],
   imports: [
     BrowserModule,

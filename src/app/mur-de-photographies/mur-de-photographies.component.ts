@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit } from '@angular/core';
+import { IPhotographie } from './photographie';
 
 @Component({
   selector: 'app-mur-de-photographies',
@@ -6,13 +7,20 @@ import { Component, OnInit } from '@angular/core'
   styleUrls: ['./mur-de-photographies.component.css'],
 })
 export class MurDePhotographiesComponent implements OnInit {
+
   constructor() { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.filteredMedias = this.medias;
+    this.mediaFilter = '';
+  }
 
-  public title = 'Mur de photographies'
+  public title = 'Mur de photographies';
+  public showBadge: boolean;
+  private _mediaFilter = "";
+  public filteredMedias: IPhotographie[] = [];
 
-  public medias: any[] = [
+  public medias: IPhotographie[] = [
     {
       mediaId: 1,
       mediaName: 'Buea sweet life',
@@ -23,7 +31,7 @@ export class MurDePhotographiesComponent implements OnInit {
     },
     {
       mediaId: 2,
-      mediaName: 'Marakech',
+      mediaName: 'Marakech new palace',
       description: 'Profitez de la vue sur les montagnes',
       price: 145.5,
       imageUrl: 'assets/img/the-interior.jpg',
@@ -47,8 +55,29 @@ export class MurDePhotographiesComponent implements OnInit {
     },
   ]
 
-  public showBadge: boolean;
-  public mediaFilter = "je recherche...";
+  public get mediaFilter(): string {
+    return this._mediaFilter;
+  }
+
+  public set mediaFilter(filter: string) {
+    this._mediaFilter = filter;
+    //Si (this.mediaFilter) contient une valeur à rechercher... on passe à l'étape suivante
+    //Si cherche la valeur (this.mediaFilter) dans la liste  (this.filterMedias(this.mediaFilter))
+    //Si aucune valeur dans(this.mediaFilter) on retourne le tableau initial (this.medias)
+    this.filteredMedias = this.mediaFilter ? this.filterMedias(this.mediaFilter) : this.medias;
+  }
+
+
+  //On retourne un nouveau tableau filtré par rapport à criteria
+  private filterMedias(criteria: string): IPhotographie[] {
+    criteria = criteria.toLocaleLowerCase();
+
+    const res = this.medias.filter(
+      (media: IPhotographie) => media.mediaName.toLocaleLowerCase().indexOf(criteria) != -1
+    )
+
+    return res;
+  }
 
   //Donne l'inverse de showBadge
   public toggleIsNewBadge(): void {
